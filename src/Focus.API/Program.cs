@@ -1,6 +1,7 @@
 using Focus.API.Configuration;
 using Focus.API.Data;
 using Focus.API.Entities;
+using Focus.API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -88,6 +89,8 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
+
+builder.Services.AddTransient<JwtTokenServices>();
 
 var app = builder.Build();
 

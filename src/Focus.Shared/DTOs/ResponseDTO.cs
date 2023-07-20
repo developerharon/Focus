@@ -17,7 +17,7 @@ namespace Focus.Shared.DTOs
     {
         public T? Data { get; set; }
 
-        public static ResponseDTO<T> Create(ResponseType type, T data, string message = "")
+        public static ResponseDTO<T> Create(ResponseType type, T? data, string message = "")
         {
             return new ResponseDTO<T> { ResponseType = type, Data = data, Message = message };
         }

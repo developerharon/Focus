@@ -19,12 +19,20 @@ namespace Focus.API.Controllers.v1._0
             _mediator = mediator;
         }
 
-        [AllowAnonymous]
-        [HttpPost("create")]
+        [AllowAnonymous, HttpPost("create")]
         public async Task<IActionResult> CreateUser(CreateUserDTO dto)
         {
-            var command = new CreateUserCommand(dto);
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(new CreateUserCommand(dto));
+
+            if (result.ResponseType == Shared.Enums.ResponseType.Success)
+                return Ok(result);
+            return BadRequest(result);
+        }
+
+        [AllowAnonymous, HttpPost("login")]
+        public async Task<IActionResult> Login(LoginRequestDTO dto)
+        {
+            var result = await _mediator.Send(new LoginCommand(dto));
 
             if (result.ResponseType == Shared.Enums.ResponseType.Success)
                 return Ok(result);
