@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Focus.Shared\Focus.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
