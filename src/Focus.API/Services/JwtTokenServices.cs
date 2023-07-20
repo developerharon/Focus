@@ -34,6 +34,7 @@ namespace Focus.API.Services
             {
                 new Claim(ClaimTypes.Name, user.UserName ?? ""),
                 new Claim(ClaimTypes.Email, user.Email ?? ""),
+                new Claim("UserID", user.Id),
                 new Claim("Full name", user.Name ?? ""),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
