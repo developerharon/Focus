@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Focus.UI", "Focus.UI\Focus.UI.csproj", "{9533B12B-64B0-42CD-8676-3B5F96EF1787}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Focus.API", "Focus.API\Focus.API.csproj", "{3E2091B2-A895-4D8F-9F47-13B1D0CD3941}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{9533B12B-64B0-42CD-8676-3B5F96EF1787}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9533B12B-64B0-42CD-8676-3B5F96EF1787}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9533B12B-64B0-42CD-8676-3B5F96EF1787}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E2091B2-A895-4D8F-9F47-13B1D0CD3941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E2091B2-A895-4D8F-9F47-13B1D0CD3941}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E2091B2-A895-4D8F-9F47-13B1D0CD3941}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E2091B2-A895-4D8F-9F47-13B1D0CD3941}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
