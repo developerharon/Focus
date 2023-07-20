@@ -32,7 +32,7 @@ namespace Focus.API.UseCases.Users.Commands
                 var user = await _userManager.FindByNameAsync(request.DTO.UserName);
 
                 if (user != null)
-                    return ResponseDTO<string>.Create(Shared.Enums.ResponseType.Error, "User already exists");
+                    return ResponseDTO<string>.Create(Shared.Enums.ResponseType.Error, null, "User already exists");
 
                 user = new UserEntity
                 {
@@ -46,7 +46,7 @@ namespace Focus.API.UseCases.Users.Commands
 
                 if (result.Succeeded)
                     return ResponseDTO<string>.Create(Shared.Enums.ResponseType.Success, user.UserName);
-                return ResponseDTO<string>.Create(Shared.Enums.ResponseType.Error, GenerateErrorMessage(result));
+                return ResponseDTO<string>.Create(Shared.Enums.ResponseType.Error, null, GenerateErrorMessage(result));
             }
 
             private string GenerateErrorMessage(IdentityResult result)

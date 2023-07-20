@@ -42,9 +42,19 @@ namespace Focus.API.Controllers.v1._0
         [AllowAnonymous, HttpPost("refresh")]
         public async Task<IActionResult> RefreshToken(RefreshTokenDTO dto)
         {
-            var result = await _mediator.Send(new  RefreshTokenCommand(dto));
+            var result = await _mediator.Send(new RefreshTokenCommand(dto));
 
-            if (result.ResponseType != Shared.Enums.ResponseType.Success)
+            if (result.ResponseType == Shared.Enums.ResponseType.Success)
+                return Ok(result);
+            return BadRequest(result);
+        }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            var result = await _mediator.Send(new LogoutCommand(HttpContext));
+
+            if (result.ResponseType == Shared.Enums.ResponseType.Success)
                 return Ok(result);
             return BadRequest(result);
         }
