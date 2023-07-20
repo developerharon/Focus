@@ -48,7 +48,9 @@ namespace Focus.API.UseCases.Users.Commands
                     var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
                     user.RefreshToken = _tokenService.GenerateRefreshToken();
-                    user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_jwtConfig.RefreshTokenDurationInDays ?? 7);
+
+                    // TODO: Magic number
+                    user.RefreshTokenExpiryTime = DateTimeOffset.UtcNow.AddDays(_jwtConfig.RefreshTokenDurationInDays ?? 7);
 
                     await _userManager.UpdateAsync(user);
 
