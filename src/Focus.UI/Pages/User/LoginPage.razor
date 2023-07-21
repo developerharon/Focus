@@ -1,0 +1,32 @@
+﻿@page "/user/login"
+@layout IdentityLayout
+@attribute [AllowAnonymous]
+
+<EditForm Model="LoginUserViewModel.LoginRequestDTO" OnValidSubmit="LoginUserViewModel.LoginUserAsync">
+    <DataAnnotationsValidator />
+
+    <MudText Typo="Typo.h4" GutterBottom="true">Sign In</MudText>
+
+    <MudText>Don't have an account? <MudLink Href="/user/register">Sign Up</MudLink></MudText>
+
+    @if (!string.IsNullOrEmpty(LoginUserViewModel.Message))
+    {
+        <div class="my-6">
+            <MudAlert Severity="Severity.Error" Variant="Variant.Filled">@LoginUserViewModel.Message</MudAlert>
+        </div>
+    }
+
+    <MudTextField @bind-Value="LoginUserViewModel.LoginRequestDTO.Email" Label="Email" Variant="Variant.Outlined" Class="my-6"
+        For="@(() => LoginUserViewModel.LoginRequestDTO.Email)"/>
+
+    <MudTextField @bind-Value="LoginUserViewModel.LoginRequestDTO.Password" Label="Password" Variant="Variant.Outlined" 
+        InputType="@passwordInputType" Adornment="Adornment.End" AdornmentIcon="@passwordInputIcon" OnAdornmentClick="TogglePasswordVisibility"
+        For="@(() => LoginUserViewModel.LoginRequestDTO.Password)"/>
+
+    <div class="d-flex justify-space-between align-center">
+        <MudCheckBox T="bool" Label="Remember me?" Color="Color.Primary" Class="ml-n1 my-3"></MudCheckBox>
+        <MudLink Href="/user/forgot-password">Forgot password?</MudLink>
+    </div>
+
+    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" FullWidth="true">Sign In</MudButton>
+</EditForm>
