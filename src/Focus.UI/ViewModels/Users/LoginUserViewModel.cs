@@ -40,8 +40,7 @@ namespace Focus.UI.ViewModels.Users
             HttpResponseMessage? response = null;
             try
             {
-                var url = ServerUrls.LoginUrl;
-                response = await _httpClient.PostAsJsonAsync(url, LoginRequestDTO);
+                response = await _httpClient.PostAsJsonAsync(ServerUrls.LoginUrl, LoginRequestDTO);
                 response.EnsureSuccessStatusCode();
 
                 var responseDto = await JsonSerializer.DeserializeAsync<ResponseDTO<LoginResponseDTO>>(await response.Content.ReadAsStreamAsync(), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
@@ -52,6 +51,8 @@ namespace Focus.UI.ViewModels.Users
                 await responseDto.Data.PersistLoginTokensAsync(_localStorageService);
                 _httpClient.SetBearerAuthenticationHeader(responseDto.Data.AccessToken);
                 ((CustomAuthenticationStateProvider)_authenticationStateProvider).NotifyUserAuthentication(responseDto.Data.AccessToken);
+
+                _navigationManager.NavigateTo("/");
             }
             catch (HttpRequestException ex)
             {

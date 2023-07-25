@@ -1,5 +1,4 @@
 ﻿using Blazored.LocalStorage;
-using Focus.Shared.DTOs;
 using Focus.Shared.DTOs.Users;
 
 namespace Focus.UI.Extensions
