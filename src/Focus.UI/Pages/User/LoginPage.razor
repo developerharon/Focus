@@ -1,5 +1,6 @@
 ﻿@page "/user/login"
 @layout IdentityLayout
+@inherits ComponentBase
 @attribute [AllowAnonymous]
 
 <EditForm Model="LoginUserViewModel.LoginRequestDTO" OnValidSubmit="LoginUserViewModel.LoginUserAsync">

@@ -6,5 +6,10 @@
         {
             httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", accessToken);
         }
+
+        public static void RemoveBearerAuthenticationHeader(this HttpClient httpClient)
+        {
+            httpClient.DefaultRequestHeaders.Authorization = null;
+        }
     }
 }
