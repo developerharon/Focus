@@ -2,9 +2,74 @@
 
 <PageTitle>Index</PageTitle>
 
-@foreach (var task in tasks)
-{
-    <div style="padding-bottom: 8px;">
-        <MudAlert Severity="Severity.Info">@task.Name</MudAlert>
-    </div>
+
+<MudList Clickable="true">
+    @foreach (var todoItem in _todoItems)
+    {
+        @if (todoItem.IsDone)
+        {
+            <MudListItem OnClick="(() => UpdateItem(todoItem))" Icon="@Icons.Material.Filled.CheckBox" IconColor="Color.Primary">
+                @todoItem.Task
+                <MudIcon Icon="@Icons.Material.Filled.StarOutline" Color="Color.Primary" />
+            </MudListItem>
+        }
+        else
+        {
+            <MudListItem OnClick="(() => UpdateItem(todoItem))" Icon="@Icons.Material.Filled.CheckBoxOutlineBlank" IconColor="Color.Primary">
+                @todoItem.Task
+            </MudListItem>
+        }
+        <MudDivider />
+    }
+</MudList>
+
+<MudList Clickable="true">
+    <MudListItem OnClick="AddTodoItem" Icon="@Icons.Material.Filled.Add" IconColor="Color.Primary">
+        Add a Item
+    </MudListItem>
+</MudList>
+
+<MudList Clickable="true">
+    <MudListItem>
+        <MudGrid>
+            <MudItem lg="2">
+                <MudIcon Icon="@Icons.Material.Outlined.Circle" Color="Color.Primary" />
+            </MudItem>
+            <MudItem lg="8">
+                <MudTextField T="string" />
+            </MudItem>
+            <MudItem lg="2">
+                <MudIconButton Icon="@Icons.Material.Filled.Send" Color="Color.Primary" />
+            </MudItem>
+        </MudGrid>
+    </MudListItem>
+</MudList>
+
+<MudTextField T="string" Variant="Variant.Text" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Circle" />
+<MudIconButton Icon="@Icons.Material.Filled.Send" Color="Color.Primary" />
+
+
+
+@code {
+    public class TodoItem
+    {
+        public bool IsDone { get; set; }
+        public string Task { get; set; } = string.Empty;
+    }
+
+    public List<TodoItem> _todoItems = new List<TodoItem>
+    {
+        new TodoItem { IsDone = true, Task = "Go the market" },
+        new TodoItem { IsDone = false, Task = "Read EFCore Database book" }
+    };
+
+    private void UpdateItem(TodoItem item)
+    {
+        item.IsDone = !item.IsDone;
+    }
+
+    private void AddTodoItem()
+    {
+
+    }
 }
