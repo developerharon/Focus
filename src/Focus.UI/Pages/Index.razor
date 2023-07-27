@@ -2,53 +2,73 @@
 
 <PageTitle>Index</PageTitle>
 
+<MudText Typo="Typo.h3" GutterBottom="true">Home</MudText>
 
-<MudList Clickable="true">
+<MudList Clickable="false">
     @foreach (var todoItem in _todoItems)
     {
-        @if (todoItem.IsDone)
+        @if (!todoItem.IsDone)
         {
-            <MudListItem OnClick="(() => UpdateItem(todoItem))" Icon="@Icons.Material.Filled.CheckBox" IconColor="Color.Primary">
-                @todoItem.Task
-                <MudIcon Icon="@Icons.Material.Filled.StarOutline" Color="Color.Primary" />
-            </MudListItem>
+            <MudPaper Class="pa-2 ma-2 cursor-default" Outlined="true">
+                <MudListItem OnClick="(() => UpdateItem(todoItem))" Icon="@Icons.Material.Filled.CheckBoxOutlineBlank" IconColor="Color.Primary">
+                    @todoItem.Task
+                </MudListItem>
+            </MudPaper>
         }
-        else
-        {
-            <MudListItem OnClick="(() => UpdateItem(todoItem))" Icon="@Icons.Material.Filled.CheckBoxOutlineBlank" IconColor="Color.Primary">
-                @todoItem.Task
-            </MudListItem>
-        }
-        <MudDivider />
     }
 </MudList>
 
-<MudList Clickable="true">
-    <MudListItem OnClick="AddTodoItem" Icon="@Icons.Material.Filled.Add" IconColor="Color.Primary">
-        Add a Item
-    </MudListItem>
+<MudList Clickable="false">
+    @if (showCompletedTasks)
+    {
+        <MudPaper Class="pa-2 ma-2 cursor-default" Outlined="true" Width="180px">
+            <MudListItem OnClick="(() => ShowCompletedTasks())" Icon="@Icons.Material.Outlined.ArrowDropDown" IconColor="Color.Primary">
+                Completed
+            </MudListItem>
+        </MudPaper>
+    }
+    else
+    {
+        <MudPaper Class="pa-2 ma-2 cursor-default" Outlined="true" Width="180px">
+            <MudListItem OnClick="(() => ShowCompletedTasks())" Icon="@Icons.Material.Outlined.ArrowRight" IconColor="Color.Primary">
+                Completed
+            </MudListItem>
+        </MudPaper>
+    }
 </MudList>
 
-<MudList Clickable="true">
-    <MudListItem>
-        <MudGrid>
-            <MudItem lg="2">
-                <MudIcon Icon="@Icons.Material.Outlined.Circle" Color="Color.Primary" />
-            </MudItem>
-            <MudItem lg="8">
-                <MudTextField T="string" />
-            </MudItem>
-            <MudItem lg="2">
-                <MudIconButton Icon="@Icons.Material.Filled.Send" Color="Color.Primary" />
-            </MudItem>
-        </MudGrid>
-    </MudListItem>
+@if (showCompletedTasks)
+{
+    <MudList Clickable="false">
+        @foreach (var todoItem in _todoItems)
+        {
+            @if (todoItem.IsDone)
+            {
+                <MudPaper Class="pa-2 ma-2 cursor-default" Outlined="true">
+                    <MudListItem OnClick="(() => UpdateItem(todoItem))" Icon="@Icons.Material.Filled.CheckBox" IconColor="Color.Primary"
+                                 Style="rounded">
+                        @todoItem.Task
+                    </MudListItem>
+                </MudPaper>
+            }
+        }
+    </MudList>
+}
+
+
+<MudList Clickable="false">
+    <MudPaper Class="pa-2 ma-2 cursor-default" Outlined="true">
+        <MudListItem OnClick="AddTodoItem" Icon="@Icons.Material.Filled.Add" IconColor="Color.Primary">
+            Add a Item
+        </MudListItem>
+    </MudPaper>
 </MudList>
 
-<MudTextField T="string" Variant="Variant.Text" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Circle" />
-<MudIconButton Icon="@Icons.Material.Filled.Send" Color="Color.Primary" />
-
-
+<MudMenu Icon="@Icons.Material.Filled.Person" IconColor="Color.Primary">
+    <MudMenuItem>Item 1</MudMenuItem>
+    <MudMenuItem>Item 2</MudMenuItem>
+    <MudMenuItem>Item 3</MudMenuItem>
+</MudMenu>
 
 @code {
     public class TodoItem
@@ -63,13 +83,21 @@
         new TodoItem { IsDone = false, Task = "Read EFCore Database book" }
     };
 
+    private bool showCompletedTasks = false;
+
     private void UpdateItem(TodoItem item)
     {
         item.IsDone = !item.IsDone;
+        //StateHasChanged();
     }
 
     private void AddTodoItem()
     {
 
+    }
+
+    private void ShowCompletedTasks()
+    {
+        showCompletedTasks = !showCompletedTasks;
     }
 }
