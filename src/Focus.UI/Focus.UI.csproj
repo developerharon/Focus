@@ -18,6 +18,10 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Focus.Shared\Focus.Shared.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="ViewModels\Lists\" />
+	</ItemGroup>
 	
 	
 </Project>

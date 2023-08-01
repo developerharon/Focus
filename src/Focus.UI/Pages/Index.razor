@@ -4,10 +4,23 @@
 
 <MudText Typo="Typo.h3" GutterBottom="true">Home</MudText>
 
+<div class="ma-2">
+    <MudButton StartIcon="@Icons.Material.Outlined.AddBox" Color="Color.Primary">New task</MudButton>
+</div>
+
 <MudList Clickable="false">
     @foreach (var todoItem in _todoItems)
     {
-        @if (!todoItem.IsDone)
+        @if (todoItem.IsDone)
+        {
+            <MudPaper Class="pa-2 ma-2 cursor-default" Outlined="true">
+                <MudListItem OnClick="(() => UpdateItem(todoItem))" Icon="@Icons.Material.Filled.CheckBox" IconColor="Color.Primary"
+                             Class="rounded" Style="text-decoration: line-through;">
+                    @todoItem.Task
+                </MudListItem>
+            </MudPaper>
+        }
+        else
         {
             <MudPaper Class="pa-2 ma-2 cursor-default" Outlined="true">
                 <MudListItem OnClick="(() => UpdateItem(todoItem))" Icon="@Icons.Material.Filled.CheckBoxOutlineBlank" IconColor="Color.Primary">
@@ -18,51 +31,6 @@
     }
 </MudList>
 
-<MudList Clickable="false">
-    @if (showCompletedTasks)
-    {
-        <MudPaper Class="pa-2 ma-2 cursor-default" Outlined="true" Width="180px">
-            <MudListItem OnClick="(() => ShowCompletedTasks())" Icon="@Icons.Material.Outlined.ArrowDropDown" IconColor="Color.Primary">
-                Completed
-            </MudListItem>
-        </MudPaper>
-    }
-    else
-    {
-        <MudPaper Class="pa-2 ma-2 cursor-default" Outlined="true" Width="180px">
-            <MudListItem OnClick="(() => ShowCompletedTasks())" Icon="@Icons.Material.Outlined.ArrowRight" IconColor="Color.Primary">
-                Completed
-            </MudListItem>
-        </MudPaper>
-    }
-</MudList>
-
-@if (showCompletedTasks)
-{
-    <MudList Clickable="false">
-        @foreach (var todoItem in _todoItems)
-        {
-            @if (todoItem.IsDone)
-            {
-                <MudPaper Class="pa-2 ma-2 cursor-default" Outlined="true">
-                    <MudListItem OnClick="(() => UpdateItem(todoItem))" Icon="@Icons.Material.Filled.CheckBox" IconColor="Color.Primary"
-                                 Style="rounded">
-                        @todoItem.Task
-                    </MudListItem>
-                </MudPaper>
-            }
-        }
-    </MudList>
-}
-
-
-<MudList Clickable="false">
-    <MudPaper Class="pa-2 ma-2 cursor-default" Outlined="true">
-        <MudListItem OnClick="AddTodoItem" Icon="@Icons.Material.Filled.Add" IconColor="Color.Primary">
-            Add a Item
-        </MudListItem>
-    </MudPaper>
-</MudList>
 
 @code {
     public class TodoItem
@@ -77,8 +45,6 @@
         new TodoItem { IsDone = false, Task = "Read EFCore Database book" }
     };
 
-    private bool showCompletedTasks = false;
-
     private void UpdateItem(TodoItem item)
     {
         item.IsDone = !item.IsDone;
@@ -88,10 +54,5 @@
     private void AddTodoItem()
     {
 
-    }
-
-    private void ShowCompletedTasks()
-    {
-        showCompletedTasks = !showCompletedTasks;
     }
 }
