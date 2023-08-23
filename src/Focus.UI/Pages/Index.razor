@@ -8,6 +8,17 @@
     <MudButton StartIcon="@Icons.Material.Outlined.AddBox" Color="Color.Primary">New task</MudButton>
 </div>
 
+<MudPaper Class="pa-4">
+    <MudStack Row="true">
+        <MudAvatar Color="Color.Primary" Size="Size.Large">H</MudAvatar>
+        <MudStack Justify="Justify.Center" Spacing="0">
+            <MudText Typo="Typo.body1">Mony Larsson</MudText>
+            <MudText Typo="Typo.body2">onebiteonekill@mony.dog</MudText>
+        </MudStack>
+    </MudStack>
+</MudPaper>
+
+
 <MudList Clickable="false">
     @foreach (var todoItem in _todoItems)
     {
