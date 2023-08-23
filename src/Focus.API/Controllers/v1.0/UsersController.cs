@@ -1,4 +1,5 @@
 ﻿using Focus.API.UseCases.Users.Commands;
+using Focus.Shared.DTOs;
 using Focus.Shared.DTOs.Users;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -10,6 +11,7 @@ namespace Focus.API.Controllers.v1._0
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [Authorize]
+    [Produces("application/json")]
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -19,7 +21,29 @@ namespace Focus.API.Controllers.v1._0
             _mediator = mediator;
         }
 
-        [AllowAnonymous, HttpPost("create")]
+        /// <summary>
+        /// Create a user.
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns>Response DTO with the created User ID</returns>
+        /// /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Todo
+        ///     {
+        ///        "id": 1,
+        ///        "name": "Item #1",
+        ///        "isComplete": true
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>
+        [HttpPost]
+        [Route("create")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseDTO<string>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseDTO<string>))]
         public async Task<IActionResult> CreateUser(CreateUserDTO dto)
         {
             var result = await _mediator.Send(new CreateUserCommand(dto));
@@ -29,7 +53,11 @@ namespace Focus.API.Controllers.v1._0
             return BadRequest(result);
         }
 
-        [AllowAnonymous, HttpPost("login")]
+        [HttpPost]
+        [Route("login")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseDTO<LoginResponseDTO>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type= typeof(ResponseDTO<LoginResponseDTO>))]
         public async Task<IActionResult> Login(LoginRequestDTO dto)
         {
             var result = await _mediator.Send(new LoginCommand(dto));
@@ -39,7 +67,11 @@ namespace Focus.API.Controllers.v1._0
             return BadRequest(result);
         }
 
-        [AllowAnonymous, HttpPost("refresh")]
+        [HttpPost]
+        [Route("refresh")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseDTO<LoginResponseDTO>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseDTO<LoginResponseDTO>))]
         public async Task<IActionResult> RefreshToken(RefreshTokenDTO dto)
         {
             var result = await _mediator.Send(new RefreshTokenCommand(dto));
@@ -49,7 +81,10 @@ namespace Focus.API.Controllers.v1._0
             return BadRequest(result);
         }
 
-        [HttpPost("logout")]
+        [HttpPost]
+        [Route("logout")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseDTO<string>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseDTO<string>))]
         public async Task<IActionResult> Logout()
         {
             var result = await _mediator.Send(new LogoutCommand(HttpContext));
